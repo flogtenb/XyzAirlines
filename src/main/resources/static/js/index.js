@@ -166,51 +166,73 @@ function getData() {
 function searchAirplane(){
     console.log("Trying to search for airplanes");
 
-    var inputSearchTerm = $("#searchAirplaneNr").val();
+    var inputSearchTerm = $("#searchAirplane").val();
 
-    // searchTerm comes from the backend airplane object
-    var newAirplaneSearchObject = {
-        searchTerm : inputSearchTerm
-    };
-
-    var newAirplaneSearch = JSON.stringify(newAirplaneSearchObject);
-    console.log(newAirplaneSearch);
+        console.log("http://localhost:8080/api/airplanes/search/"+inputSearchTerm);
 
     $.ajax({
         url : "http://localhost:8080/api/airplanes/search/"+inputSearchTerm,
         type : "get",
-//        data : newAirplaneSearch,
         contentType : "application/json",
-        success : function(data){
-        console.log("Successful get of item: " + newAirplaneSearch);
-
-
-
-
+		success : function(data){
+		console.log(data)
             var airplaneSearch = "";
-            console.log("airplaneSearch: " + airplaneSearch);
+            console.log(airplaneSearch);
             $.each(data, function(index, current){
 
-
-                var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
-				 	+ current.airplaneType + "</td><td>" + "</td><td>" + current.currentLocation 
-                    + "</td><td>" + current.destinationLocation + "</td><td>" + current.fuelInTank +
-                                    "<button type='button' class='btn btn-danger' onclick='modalDeleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
-                                    + "<button type='button' class='btn btn-info' onclick='modalEditAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
-
-
-                airplaneSearch +=columnRow;
-                console.log("airplaneSearch: " + airplaneSearch);
-            });
-
-            $(".airplaneTable").html(airplaneSearch);
-            $("#searchAirplane").val("");
-
-
+				var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
+					+ current.airplaneType + "</td><td>" + "</td><td>" + current.currentLocation
+					+ "</td><td>" + current.destinationLocation + "</td><td>" + current.fuelInTank +
+					"<button type='button' class='btn btn-danger' onclick='modalDeleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
+					+ "<button type='button' class='btn btn-info' onclick='modalEditAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
+					airplaneSearch +=columnRow;
+					console.log("airplaneSearch: " + airplaneSearch);
+				});
+				$(".airplaneTable").html(airplaneSearch);
+				$("#searchAirplane").val("");
         }
-
     });
-
 }
+
+
+		
+//    }).then(function(data){
+//        console.log(data)
+//        $.each(data, function(index, current){
+//            var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
+//    		    + current.airplaneType + "</td><td>" + "</td><td>" + current.currentLocation
+//                + "</td><td>" + current.destinationLocation + "</td><td>" + current.fuelInTank +
+//                "<button type='button' class='btn btn-danger' onclick='modalDeleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
+//                + "<button type='button' class='btn btn-info' onclick='modalEditAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
+//                airplaneSearch +=columnRow;
+//				console.log("airplaneSearch: " + airplaneSearch);
+//        });
+//       $(".airplaneTable").html(airplaneSearch);
+//        $("#searchAirplane").val("");
+//
+//    });
+//}
+
+//
+//    // searchTerm comes from the backend airplane object
+//    var newAirplaneSearchObject = {
+//        searchTerm : inputSearchTerm
+//    };
+//
+//    var newAirplaneSearch = JSON.stringify(newAirplaneSearchObject);
+//    console.log(newAirplaneSearch);
+//    console.log('sdfs');
+//    console.log(inputSearchTerm);
+
+//    $.ajax({
+//        url : "http://localhost:8080/api/airplanes/search/"+inputSearchTerm,
+//        type : "get",
+////        data : newAirplaneSearch,
+//        contentType : "application/json",
+//        success : function(data){
+//        console.log("Successful get of item: " + newAirplaneSearch);
+//        var airplaneSearch = "";
+//        console.log("airplaneSearch: " + airplaneSearch);
+//}
 
 

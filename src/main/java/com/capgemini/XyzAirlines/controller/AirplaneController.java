@@ -55,7 +55,7 @@ public class AirplaneController {
     // Find airplane
     @RequestMapping(value = "api/airplanes/search/{searchTerm}", method = RequestMethod.GET)
     public Iterable<Airplane> searchAirplane(@PathVariable String searchTerm) {
-        return airplaneRepository.findByAirplaneNr(searchTerm);
+        return airplaneRepository.findByAirplaneNrContainingIgnoreCase(searchTerm);
     }
 
 
