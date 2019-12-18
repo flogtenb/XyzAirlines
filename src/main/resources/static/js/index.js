@@ -6,18 +6,18 @@ $(document).ready(function(){
 getData();
     });
 
-
 function editAirplane(id){
     console.log("Trying to edit data");
     console.log("Dit is ID: " + id);
-
-
 
     $("#editAirplane").click(function(){
         console.log("clicked Edit");
         var inputID = id;
         var inputAirplaneNr = $("#airplaneNrEdit").val();
-        var inputType = $("#typeEdit").val();
+        var inputAirplaneType = $("#airplaneTypeEdit").val();
+        var inputCurrentLocation = $("#currentLocationEdit").val();
+        var inputDestinationLocation = $("#destinationLocationEdit").val();
+        var inputFuelInTank = $("#fuelInTankEdit").val();
 
         console.log(inputID);
 
@@ -25,14 +25,13 @@ function editAirplane(id){
                     id : inputID,
                     airplaneNr : inputAirplaneNr,
                     airplaneType : inputAirplaneType,
-                    fuelInTank : inputFuelInTank,
                     currentLocation : inputCurrentLocation,
                     destinationLocation : inputDestinationLocation,
+                    fuelInTank : inputFuelInTank
                     };
         console.log(newAirplaneUpdateObject);
         var newAirplaneUpdate = JSON.stringify(newAirplaneUpdateObject);
         console.log(newAirplaneUpdate);
-
 
         $.ajax({
             url : "http://localhost:8080/api/airplanes/"+id,
@@ -41,14 +40,11 @@ function editAirplane(id){
             contentType : "application/json",
             success : function(data){
                 console.log("successful put")
-
                 getData();
             }
-
         });
     });
 };
-
 
 function postData(){
 	// The postData function is triggered by the add new airplane button. This function has to post the filled in data into the table.
@@ -83,13 +79,9 @@ function postData(){
         success: function(data){
             console.log("Success post!");
             getData();
-
         }
-
     });
 };
-
-
 
 
 function deleteAirplane(id){
@@ -111,11 +103,9 @@ $("#deleteThisAirplane").html("Are you sure you want to delete airplane #" + id 
 
                             getData();
                             }
-
                 });
             });
 }
-
 
 function getData() {
 
@@ -132,11 +122,9 @@ function getData() {
 				$.each(data, function(index, current) {
                     console.log("each function is initiated");
 
-
-
 				 	var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
-				 	+ current.airplaneType + "</td><td>" +  current.currentLocation 
-                    + "</td><td>" + current.destinationLocation + "</td><td>"+ current.fuelInTank + "</td><td>" +
+				 	+ current.airplaneType + "</td><td>" +  current.currentLocation + "</td><td>" 
+                    + current.destinationLocation + "</td><td>"+ current.fuelInTank + "</td><td>" +
                     "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteAirplaneModal' id='current.id' onclick='deleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
                     + "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#editAirplaneModal' id='current.id' onclick='editAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
 
@@ -144,24 +132,18 @@ function getData() {
                     $("#airplaneNrEdit").val(current.airplaneNr);
                     $("#airplaneTypeEdit").val(current.airplaneType);
 
-
 				 	airplaneTableContent += columnRow;
 
 				});
-
                 console.log(airplaneTableContent);
 
                 $("#airplaneTable").empty();
 				$("#airplaneTable").append(airplaneTableContent);
 
 				}
-
 		});
     });
-
 }
-
-
 
 function searchAirplane(){
     console.log("Trying to search for airplanes");
@@ -181,8 +163,8 @@ function searchAirplane(){
             $.each(data, function(index, current){
 
 				var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
-					+ current.airplaneType + "</td><td>" + "</td><td>" + current.currentLocation
-					+ "</td><td>" + current.destinationLocation + "</td><td>" + current.fuelInTank +
+					+ current.airplaneType + "</td><td>" + current.currentLocation + "</td><td>" 
+					+ current.destinationLocation + "</td><td>" + current.fuelInTank + "</td><td>" +
 					"<button type='button' class='btn btn-danger' onclick='modalDeleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
 					+ "<button type='button' class='btn btn-info' onclick='modalEditAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
 					airplaneSearch +=columnRow;
@@ -193,46 +175,3 @@ function searchAirplane(){
         }
     });
 }
-
-
-		
-//    }).then(function(data){
-//        console.log(data)
-//        $.each(data, function(index, current){
-//            var columnRow = "<tr><td>" + current.id + "</td><td>" + current.airplaneNr + "</td><td>"
-//    		    + current.airplaneType + "</td><td>" + "</td><td>" + current.currentLocation
-//                + "</td><td>" + current.destinationLocation + "</td><td>" + current.fuelInTank +
-//                "<button type='button' class='btn btn-danger' onclick='modalDeleteAirplane(" + current.id + ")'> Delete </button>" + "</td><td>"
-//                + "<button type='button' class='btn btn-info' onclick='modalEditAirplane(" + current.id + ")'> Edit </button>" + "</td></tr>";
-//                airplaneSearch +=columnRow;
-//				console.log("airplaneSearch: " + airplaneSearch);
-//        });
-//       $(".airplaneTable").html(airplaneSearch);
-//        $("#searchAirplane").val("");
-//
-//    });
-//}
-
-//
-//    // searchTerm comes from the backend airplane object
-//    var newAirplaneSearchObject = {
-//        searchTerm : inputSearchTerm
-//    };
-//
-//    var newAirplaneSearch = JSON.stringify(newAirplaneSearchObject);
-//    console.log(newAirplaneSearch);
-//    console.log('sdfs');
-//    console.log(inputSearchTerm);
-
-//    $.ajax({
-//        url : "http://localhost:8080/api/airplanes/search/"+inputSearchTerm,
-//        type : "get",
-////        data : newAirplaneSearch,
-//        contentType : "application/json",
-//        success : function(data){
-//        console.log("Successful get of item: " + newAirplaneSearch);
-//        var airplaneSearch = "";
-//        console.log("airplaneSearch: " + airplaneSearch);
-//}
-
-
