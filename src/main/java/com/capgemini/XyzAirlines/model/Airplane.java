@@ -18,6 +18,8 @@ public class Airplane {
     private String destinationLocation;
     @Column
     private int fuelInTank;
+    @Transient
+    public Airport airport;
 
     public Airplane() {
     }
@@ -77,6 +79,14 @@ public class Airplane {
 
     public void setFuelInTank(int fuelInTank) {
         this.fuelInTank = fuelInTank;
+    }
+
+    public Airport getAirport() {
+        return airport;
+    }
+
+    public void setAirport(Airport airport) {
+        this.airport = airport;
     }
 
     //Bijtanken van een vliegtuig met een druk op de knop

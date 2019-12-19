@@ -34,4 +34,7 @@ public class AirplaneService {
         return airplaneRepository.findAll();
     }
 
+    public Airplane save(Airplane airplane) {
+        return airplaneRepository.save(airplane);
+    }
 }
